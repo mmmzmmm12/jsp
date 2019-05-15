@@ -48,7 +48,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>terms</title>
-		<link rel="stylesheet" href="/board1/css/style.css" />		
+		<link rel="stylesheet" href="/board1/css/style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="/board1/js/termsCheck.js"></script>
+				
 	</head>
 
 	<body>
