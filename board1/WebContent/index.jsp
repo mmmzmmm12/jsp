@@ -5,7 +5,7 @@
 
 	UserBean ub = (UserBean) session.getAttribute("user");
 
-	// include 와 forward redirect는 상대경로로 써야한다.
+	
 	if(ub == null){
 	// 로그인 안했을때
 	pageContext.forward("./user/login.jsp");

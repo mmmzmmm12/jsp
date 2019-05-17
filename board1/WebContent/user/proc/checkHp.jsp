@@ -1,5 +1,7 @@
+<%@page import="kr.co.board1_config.SQL"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="kr.co.board1_config.DBConfig"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONObject"%>
@@ -9,24 +11,18 @@
 	request.setCharacterEncoding("UTF-8");
 	
 	String hp = request.getParameter("hp");
-	
-	final String host = "jdbc:mysql://192.168.0.161:3306/jtd";
-	final String user = "jtd";
-	final String pass = "1234";
-	
+
 	int count = 0;
 	
-	// 1단계 - JDBC 드라이브
-	Class.forName("com.mysql.jdbc.Driver");
-	
-	// 2단계 - 데이터베이스접속
-	Connection conn = DriverManager.getConnection(host,user,pass);
+	// 1단게, 2단계
+	Connection conn = DBConfig.getConnection();
 	
 	// 3단계 - SQL
-	Statement stmt = conn.createStatement();
+	PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_HP_COUNT);
+	psmt.setString(1, hp);
 	
 	// 4단계 - SQL
-	ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM `JSP_USER` WHERE hp ='"+hp+"';");
+	ResultSet rs = psmt.executeQuery();
 	
 	// 5단계 - 결과셋 처리(select 문일때)
 	if(rs.next()){
@@ -35,7 +31,7 @@
 	
 	// 6단계 - 종료
 	rs.close();
-	stmt.close();
+	psmt.close();
 	conn.close();
 	
 	// JSON 데이터생성 및 전송

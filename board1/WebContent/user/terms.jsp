@@ -1,16 +1,16 @@
+<%@page import="kr.co.board1_config.SQL"%>
+<%@page import="kr.co.board1_config.DBConfig"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
-	// 데이터베이스 정보
-	final String host = "jdbc:mysql://192.168.0.161:3306/jtd";
-	final String user = "jtd";
-	final String pass = "1234";
+
+
 	
 	// 참조부분 형성
-	Connection 	conn 	= null;
+	Connection  conn 	= null;
 	Statement 	stmt	= null;
 	ResultSet 	rs		= null;
 	
@@ -18,14 +18,14 @@
 	String privacy	= null;
 	
 	try{
-		// 1단계 - JDBC 드라이버로드
-		Class.forName("com.mysql.jdbc.Driver");
-		// 2단계 - 데이터베이스 접속
-		conn = DriverManager.getConnection(host,user,pass);
+
+		// 1단게, 2단계
+		conn = DBConfig.getConnection();
+		
 		// 3단계 - SQL 실행객체 생성
 		stmt = conn.createStatement();
 		// 4단계 - SQL 실행
-		rs = stmt.executeQuery("SELECT * FROM `JSP_TERMS`;");
+		rs = stmt.executeQuery(SQL.SELECT_TERMS);
 		// 5단계 - 결과 셋 처리(SELECT)
 		if(rs.next()){
 			terms 	= rs.getString(1);
