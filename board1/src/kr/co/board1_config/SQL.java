@@ -34,7 +34,6 @@ public class SQL {
 	
 	
 	// 게시판관련
-	
 	public static final String INSERT_BOARD = "INSERT INTO `JSP_BOARD` SET "
 											+ "title=?,"
 											+ "content=?,"
@@ -43,7 +42,11 @@ public class SQL {
 											+ "rdate=NOW()";
 	
 	public static final String SELECT_LIST = "SELECT a.*, b.nick FROM `JSP_BOARD` AS a "
-											+ "JOIN `JSP_USER` AS b ON a.uid = b.uid;";
+											+ "JOIN `JSP_USER` AS b ON a.uid = b.uid "
+											+ "ORDER BY seq DESC "
+											+ "LIMIT ?, 10;";
+	
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `JSP_BOARD`";
 										   
 	
 	

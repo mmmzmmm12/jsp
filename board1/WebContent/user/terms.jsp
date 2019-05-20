@@ -6,9 +6,6 @@
 <%@page import="java.sql.DriverManager"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
-
-
-	
 	// 참조부분 형성
 	Connection  conn 	= null;
 	Statement 	stmt	= null;

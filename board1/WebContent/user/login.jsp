@@ -32,7 +32,8 @@
 					<table>
 						<tr>
 							<td><img src="/board1/img/login_ico_id.png" alt="아이디" /></td>
-							<td><input type="text" name="id" required placeholder="아이디 입력" autocomplete="off" /></td>
+							<td><input type="text" name="id" required placeholder="아이디 입력" 
+							autocomplete="off" /></td>
 						</tr>
 						<tr>
 							<td><img src="/board1/img/login_ico_pw.png" alt="비밀번호" /></td>
