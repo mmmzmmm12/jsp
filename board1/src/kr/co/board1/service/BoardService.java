@@ -60,15 +60,16 @@ public class BoardService {
 		
 	}
 	
+	
 	// 페이지 그룹 계산하기
 	public int[] getPageGroupStartEnd(String pg, int totalpage) {
 		// 목록 페이지 그룹 번호
 		int[] groupStartEnd = new int[2];
 		
-		int current 	 = getCurrentPage(pg);
-		int currentGroup = (int) Math.ceil(current/10.0);  // Math 클래스의 ceil(올림)이용
-		int groupStart 	 = (currentGroup - 1) * 10 + 1;
-		int groupEnd	 = currentGroup * 10;
+		int current 	 = getCurrentPage(pg); // 현재페이지
+		int currentGroup = (int) Math.ceil(current/10.0);  // n번째 그룹 Math 클래스의 ceil(올림)이용  
+		int groupStart 	 = (currentGroup - 1) * 10 + 1; // 1 11 21 31
+		int groupEnd	 = currentGroup * 10;	// 10 20 30 40
 		
 		if(groupEnd > totalpage) {
 			groupEnd = totalpage;
@@ -171,10 +172,68 @@ public class BoardService {
 		
 		return list;
 		
-	}
+		}
 	
 	// 게시물 추가하기
 	public void insertBoard() {}
+		
+	// 조회수 업데이트
+	public void updateHit(String seq) throws Exception {
+		
+
+		// 1단계, 2단계
+		Connection conn = DBConfig.getConnection();
+				
+		// 3단계
+		PreparedStatement psmt = conn.prepareStatement(SQL.UPDATE_HIT);
+		psmt.setString(1, seq);
+		
+		// 4단계
+		psmt.executeUpdate();
+				
+		// 5단계
+		
+		// 6단계
+		psmt.close();
+		conn.close();
+	}
 	
-	
+	// 글보기 select
+	public BoardBean viewBoard(String seq) throws Exception {
+		
+		// 1단계, 2단계
+		Connection conn = DBConfig.getConnection();
+		
+		// 3단계
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_VIEW);
+		psmt.setString(1, seq);
+		
+		// 4단계
+		ResultSet rs = psmt.executeQuery();
+		
+		// 5단계
+		BoardBean bb = new BoardBean();  // 여기는 일단 비어있는데 밑의 if문을통해 넣는거임
+		
+		if(rs.next()){
+			bb.setSeq(rs.getInt(1));
+			bb.setParent(rs.getInt(2));
+			bb.setComment(rs.getInt(3));
+			bb.setCate(rs.getString(4));
+			bb.setTitle(rs.getString(5));
+			bb.setContent(rs.getString(6));
+			bb.setFile(rs.getInt(7));
+			bb.setHit(rs.getInt(8));
+			bb.setUid(rs.getString(9));
+			bb.setRegip(rs.getString(10));
+			bb.setRdate(rs.getString(11));
+		}
+		
+		// 6단계
+		rs.close();
+		psmt.close();
+		conn.close();
+		
+		return bb;
+	}
+		
 }
