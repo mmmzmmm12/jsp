@@ -18,6 +18,8 @@
 	int totalPage = 0;
 	int listCount = 0;
 	
+	int[] groupStartEnd = new int[2];
+	
 	if(ub == null){
 		// 로그인을 하지 않았을 때
 		response.sendRedirect("/board1/user/login.jsp?result=101");
@@ -40,6 +42,12 @@
 		
 		// 목록 출력용 번호
 		listCount = bs.getListStartCount(total, start);
+		
+		// 목록페이지그룹번호
+		groupStartEnd = bs.getPageGroupStartEnd(pg, totalPage);
+
+		
+		
 	}
 	
 
@@ -85,11 +93,11 @@
 			<!-- 페이징 -->
 			<nav class="paging">
 				<span> 
-				<a href="#" class="prev">이전</a>
-				<% for(int i= 1; i <= totalPage; i++){ %>
+				<a href="./list.jsp?pg=<%= groupStartEnd[0] - 1 %>" class="prev">이전</a>
+				<% for(int i= groupStartEnd[0]; i <= groupStartEnd[1]; i++){ %>
 				<a href="./list.jsp?pg=<%= i %>" class="num"><%= i %></a>
 				<% } %>
-				<a href="#" class="next">다음</a>
+				<a href="./list.jsp?pg=<%= groupStartEnd[1] + 1 %>" class="next">다음</a>
 				</span>
 			</nav>
 			<a href="/board1/write.jsp" class="btnWrite">글쓰기</a>

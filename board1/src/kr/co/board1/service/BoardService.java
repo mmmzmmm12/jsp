@@ -27,6 +27,21 @@ public class BoardService {
 		return total - start;
 	}
 	
+	// 현재 페이지
+	public int getCurrentPage(String pg) {
+		
+		int current = 0;
+		
+		// null 체크
+		if(pg == null) {
+			current = 1;
+		}else {
+			current = Integer.parseInt(pg);
+		}
+		
+		return current;
+	}
+	
 	
 	// Limit용 start값 구하기
 	public int getStartForLimit(String pg) {
@@ -40,9 +55,31 @@ public class BoardService {
 		}else {
 			start = Integer.parseInt(pg);
 		}
+		
 		return (start -1) * 10;
 		
 	}
+	
+	// 페이지 그룹 계산하기
+	public int[] getPageGroupStartEnd(String pg, int totalpage) {
+		// 목록 페이지 그룹 번호
+		int[] groupStartEnd = new int[2];
+		
+		int current 	 = getCurrentPage(pg);
+		int currentGroup = (int) Math.ceil(current/10.0);  // Math 클래스의 ceil(올림)이용
+		int groupStart 	 = (currentGroup - 1) * 10 + 1;
+		int groupEnd	 = currentGroup * 10;
+		
+		if(groupEnd > totalpage) {
+			groupEnd = totalpage;
+		}
+		
+		groupStartEnd[0] = groupStart;
+		groupStartEnd[1] = groupEnd;
+		
+		return groupStartEnd;
+	}
+	
 	
 	// 전체 페이지 수 구하기
 	public int getTotalpage(int boardTotal) {
