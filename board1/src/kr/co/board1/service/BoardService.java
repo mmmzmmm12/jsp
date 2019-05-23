@@ -236,4 +236,54 @@ public class BoardService {
 		return bb;
 	}
 		
+
+
+	// 댓글 리스트
+	public List<BoardBean> commentList(String parent) throws Exception {
+		
+		// 1단계, 2단계
+		Connection conn = DBConfig.getConnection();
+		
+		// 3단계
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_COMMENT_LIST);
+		psmt.setString(1, parent);
+		
+		// 4단계
+		ResultSet rs = psmt.executeQuery();
+		
+		// 5단계
+		ArrayList<BoardBean> list = new ArrayList<>();		
+		
+		while(rs.next()) {
+			
+			BoardBean bb = new BoardBean();
+			
+			bb.setSeq(rs.getInt(1));
+			bb.setParent(rs.getInt(2));
+			bb.setComment(rs.getInt(3));
+			bb.setCate(rs.getString(4));
+			bb.setTitle(rs.getString(5));
+			bb.setContent(rs.getString(6));
+			bb.setFile(rs.getInt(7));
+			bb.setHit(rs.getInt(8));
+			bb.setUid(rs.getString(9));
+			bb.setRegip(rs.getString(10));
+			bb.setRdate(rs.getString(11));
+			bb.setNick(rs.getString(12));
+			
+			list.add(bb);
+		} 
+		// rs를 통해 bb에넣어주고 bb의 정보를 list에 묶음씩 넣어준다.
+		
+		// 6단계
+		rs.close();
+		psmt.close();
+		conn.close();
+		
+		return list;
+		
+	}
+
+	
+	
 }
