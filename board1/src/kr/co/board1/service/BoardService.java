@@ -283,6 +283,23 @@ public class BoardService {
 		return list;
 		
 	}
+	
+	// ´ñ±Û°¹¼ö
+	public int cntComment(int parent) throws Exception {
+		Connection conn = DBConfig.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_COUNT_COMMENT);
+		psmt.setInt(1,parent);
+		ResultSet rs = psmt.executeQuery();
+		int commentcnt = 0;
+		while(rs.next()){
+			commentcnt = rs.getInt(1);
+		}
+		rs.close();
+		psmt.close();
+		conn.close();
+		
+		return commentcnt;
+	}
 
 	
 	

@@ -6,6 +6,7 @@
 <%
 
 	String seq = request.getParameter("seq");
+	String parent = request.getParameter("parent");
 	String pg = request.getParameter("pg");
 
 	// 1단계, 2단계
@@ -22,7 +23,12 @@
 	// 6단계
 	psmt.close();
 	conn.close();
-
-	response.sendRedirect("../list.jsp?pg="+pg);
 	
+	if(parent == null){
+		response.sendRedirect("../list.jsp?pg="+pg);
+	}else{
+		response.sendRedirect("../view.jsp?pg="+pg+"&seq="+parent);
+	}
+	
+
 %>

@@ -31,8 +31,6 @@ public class SQL {
 	// PrepareStatement는 ?를 이용하여 맵핑을 해야할 경우 쓴다. 
 	// 현장에서는 PrepareStatement를 많이 쓴다.
 	
-	
-	
 	// 게시판관련
 	public static final String INSERT_BOARD = "INSERT INTO `JSP_BOARD` SET "
 											+ "title=?,"
@@ -40,6 +38,11 @@ public class SQL {
 											+ "uid=?,"
 											+ "regip=?,"
 											+ "rdate=NOW()";
+	
+	public static final String SELECT_MAX_SEQ = "SELECT MAX(seq) FROM `JSP_BOARD`;";
+	
+	public static final String INSERT_FILE =  "INSERT INTO `JSP_FILE` (`parent`,`oldName`,`newName`,`rdate`) VALUES (?,?,?,NOW());";
+	
 	
 	public static final String SELECT_LIST = "SELECT a.*, b.nick FROM `JSP_BOARD` AS a "
 											+ "JOIN `JSP_USER` AS b ON a.uid = b.uid "
@@ -68,5 +71,8 @@ public class SQL {
 													+ "WHERE parent=? "
 													+ "ORDER BY seq ASC	";
 	
+	public static final String SELECT_COUNT_COMMENT = "SELECT COUNT(*) AS cnt FROM `JSP_BOARD` a , `JSP_BOARD` b "
+													+ "WHERE b.parent = ? && a.seq=b.parent;";
+
 	
 }

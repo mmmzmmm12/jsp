@@ -18,6 +18,7 @@
 	int totalPage = 0;
 	int listCount = 0;
 	int current   = 0;
+	int cntComment = 0;
 	
 	int[] groupStartEnd = new int[2];
 	
@@ -78,12 +79,13 @@
 						<td>조회</td>
 					</tr>
 					
-					<%
-					for(BoardBean bb : list){
+					<% for(BoardBean bb:list) {
+						BoardService bs = BoardService.getIntance();
+						cntComment = bs.cntComment(bb.getSeq());
 					%>
 					<tr>
 						<td><%= listCount-- %></td>
-						<td><a href="./view.jsp?pg=<%= current %>&seq=<%= bb.getSeq() %>"><%= bb.getTitle() %></a>&nbsp;[<%= bb.getComment() %>]</td>
+						<td class="comment"><a href="./view.jsp?pg=<%= current %>&seq=<%= bb.getSeq() %>"><%= bb.getTitle() %></a>&nbsp;[<%= cntComment %>]</td>
 						<td><%= bb.getNick() %></td>
 						<td><%= bb.getRdate().substring(2,10) %></td>
 						<td><%= bb.getHit() %></td>
@@ -119,6 +121,7 @@
 	</body>
 
 </html>
+
 
 
 

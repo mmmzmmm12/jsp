@@ -1,3 +1,4 @@
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="kr.co.board1.service.BoardService"%>
@@ -23,7 +24,7 @@
 
 	// 댓글 리스트 가져오기
 	List<BoardBean> commentList = service.commentList (seq);
-
+	
 %>
 
 
@@ -65,7 +66,7 @@
 						</tr>	
 					</table>
 					<div class="btns">
-						<a onclick = "return confirm('정말로 삭제할거야?')" href="./proc/delete.jsp?seq=<%= seq %>&pg=<%= pg %>" class="cancel del">삭제</a>
+						<a onclick = "return confirm('글삭제할레??')" href="./proc/delete.jsp?seq=<%= seq %>&pg=<%= pg %>" class="cancel del">삭제</a>
 						<a href="./proc/update.jsp?seq=<%= seq %>&pg=<%= pg %>" class="cancel mod">수정</a>
 						<a href="./list.jsp?pg=<%=pg %>" class="cancel">목록</a>
 					</div>
@@ -102,7 +103,7 @@
 					</span>
 					<textarea><%= comment.getContent() %></textarea>
 					<div>
-						<a href="#" class="del">삭제</a>
+						<a onclick = "return confirm('댓글삭제할레??')" href="./proc/delete.jsp?seq=<%= comment.getSeq() %>&parent=<%= seq %>&pg=<%= pg %>" class="del">삭제</a>
 						<a href="#" class="mod">수정</a>
 					</div>
 				</div>
@@ -145,6 +146,7 @@
 								var parent   = $('.comment_write input[name=parent]').val();
 								var content  = textarea.val();
 								
+								
 								if(content == ""){
 									
 									alert('댓글 내용을 입력하세요');
@@ -169,6 +171,8 @@
 											
 											comments.append(commentNew);
 											
+											textarea.val('');
+											
 											// empty 문구 삭제
 											var empty = $('.empty');
 											if(empty.is(':visible')){
@@ -177,7 +181,9 @@
 											
 										}
 										
+										
 									});
+
 								}						
 								
 								return false;

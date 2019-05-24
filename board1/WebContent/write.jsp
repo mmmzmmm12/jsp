@@ -9,8 +9,8 @@
 	<body>
 		<div id="board">
 			<h3>글쓰기</h3>
-			<div class="write">
-				<form action="/board1/proc/write.jsp" method="post">
+			<div class="write">									<% //파일전송은 enctype="multipart/form-data" 필요 %>
+				<form action="/board1/proc/write.jsp" method="post" enctype="multipart/form-data"> 
 					<table>
 						<tr>
 							<td>제목</td>

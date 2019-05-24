@@ -37,7 +37,7 @@
 	// JSON 데이터생성 및 전송
 	/* String json = "{'result': 1}"; 로 해되되지만 앞으로 여러개를 할 거기때문에 라이브러리로 한다.*/
 	JSONObject json = new JSONObject();
-	json.put("result", count);
+	json.put("parent", count);
 	
 	out.print(json);
 
