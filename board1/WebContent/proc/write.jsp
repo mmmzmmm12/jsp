@@ -15,16 +15,17 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.board1_config.DBConfig"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
 	/*
 	request.setCharacterEncoding("UTF-8");
-
 
 	String subject  = request.getParameter("subject");
 	String content  = request.getParameter("content");
 	String regip 	= request.getRemoteAddr();
 
 	*/
+	
 	//테스트용
 	String path = "C:/test";
 	
@@ -41,12 +42,15 @@
 	String regip	= request.getRemoteAddr();
 	String newName  = null;
 	int parent		= 0;
+	int file =0;
 	
 	// 세션에서 사용자 아이디 가져오기
 	UserBean ub =(UserBean)session.getAttribute("user");
 	String uid = ub.getUid();
 	
 	if(fileName != null){
+		
+		file = 1; 
 		
 		// 1.파일명 생성
 		int i 		= fileName.lastIndexOf("."); // 뒤에서부터 .의 인덱스번호 찾기
@@ -58,7 +62,6 @@
 		newName = now+uid+ext;  // ex) 20190524104512_abcd.txt
 		
 		// 2.2파일명 변경
-
 		// 1단계 - 파일객체생성
 		File oldFile = new File(path+"/"+fileName);
 		File newFile = new File(path+"/"+newName);
@@ -85,7 +88,6 @@
 			bos.write(value);
 		}
 		
-		
 		// 5단계 - 스트림해재
 		bis.close();
 		bos.close();
@@ -94,7 +96,6 @@
 		
 		// 원본파일은 필요없어서 지움
 		oldFile.delete();
-		
 		
 	}else{
 			
@@ -111,10 +112,11 @@
 	Statement stmt = conn.createStatement();
 	
 	PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_BOARD);
-	psmt.setString(1, subject);
-	psmt.setString(2, content);
-	psmt.setString(3, uid);
-	psmt.setString(4, regip);
+	psmt.setString(1, subject );
+	psmt.setString(2, content );
+	psmt.setInt(3, file );
+	psmt.setString(4, uid );
+	psmt.setString(5, regip );
 	
 	// 4단계 - SQL
 	psmt.executeUpdate();
@@ -128,12 +130,10 @@
 		parent = rs.getInt(1);
 	}
 	
-	
 	// 6단계 - 종료
 	rs.close();
 	psmt.close();
 	conn.close();
-	
 
 	if(fileName != null){
 	// 파일첨부 내용 INSERT
@@ -149,7 +149,6 @@
 	// 4단계
 	psmt1.executeUpdate();
 			
-	// 5단계
 	// 6단계
 	psmt1.close();
 	conn1.close();

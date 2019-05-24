@@ -35,6 +35,7 @@ public class SQL {
 	public static final String INSERT_BOARD = "INSERT INTO `JSP_BOARD` SET "
 											+ "title=?,"
 											+ "content=?,"
+											+ "file=?,"
 											+ "uid=?,"
 											+ "regip=?,"
 											+ "rdate=NOW()";
@@ -52,7 +53,10 @@ public class SQL {
 	
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `JSP_BOARD`";
 										   
-	public static final String SELECT_VIEW = "SELECT * FROM `JSP_BOARD` WHERE seq=?";
+	public static final String SELECT_VIEW = " SELECT * FROM `JSP_BOARD` AS a "  
+											+ "LEFT JOIN `JSP_FILE` AS b "
+											+ "ON a.seq = b.parent "
+											+ "WHERE seq=?;";
 	
 	public static final String UPDATE_HIT = "UPDATE `JSP_BOARD` SET hit=hit + 1 WHERE seq =?;";
 	
@@ -74,5 +78,9 @@ public class SQL {
 	public static final String SELECT_COUNT_COMMENT = "SELECT COUNT(*) AS cnt FROM `JSP_BOARD` a , `JSP_BOARD` b "
 													+ "WHERE b.parent = ? && a.seq=b.parent;";
 
+	public static final String UPDATE_DOWNLOAD = "UPDATE `JSP_FILE` SET download=download + 1 WHERE parent=?";
+
+	public static final String UPDATE_BOARD = "UPDATE BBS SET title =?, content =?, WHERE seq =?;";
+	
 	
 }

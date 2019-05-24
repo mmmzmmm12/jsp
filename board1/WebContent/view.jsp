@@ -52,8 +52,8 @@
 						<tr>
 							<td>첨부파일</td>
 							<td>
-								<a href="#">테스트.hwp</a>
-								<span>3회 다운로드</span>
+								<a href="./proc/download.jsp?seq=<%= bb.getSeq() %>&oldName=<%= bb.getOldName()%>&newName=<%=bb.getNewName() %>"><%=  bb.getOldName()%></a>
+								<span><%=bb.getDownload() %>회 다운로드</span>
 							</td>
 						</tr>
 						<% } %>
@@ -104,7 +104,7 @@
 					<textarea><%= comment.getContent() %></textarea>
 					<div>
 						<a onclick = "return confirm('댓글삭제할레??')" href="./proc/delete.jsp?seq=<%= comment.getSeq() %>&parent=<%= seq %>&pg=<%= pg %>" class="del">삭제</a>
-						<a href="#" class="mod">수정</a>
+						<a onclick = "return confirm('댓글수정할레??')" href="#" class="mod">수정</a>
 					</div>
 				</div>
 				<%

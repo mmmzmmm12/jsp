@@ -226,6 +226,10 @@ public class BoardService {
 			bb.setUid(rs.getString(9));
 			bb.setRegip(rs.getString(10));
 			bb.setRdate(rs.getString(11));
+			bb.setOldName(rs.getString(13));
+			bb.setNewName(rs.getString(14));
+			bb.setDownload(rs.getInt(15));
+			
 		}
 		
 		// 6단계
@@ -235,7 +239,27 @@ public class BoardService {
 		
 		return bb;
 	}
+	
+	//글수정 UPDATE
+
+	public void updateBoard(String seq, String title, String content) throws Exception {
 		
+		// 1단계, 2단계
+		Connection conn = DBConfig.getConnection();
+		
+		// 3단계
+		PreparedStatement psmt = conn.prepareStatement(SQL.UPDATE_BOARD);
+		psmt.setString(1, title);
+		psmt.setString(2, content);
+		psmt.setString(3, seq);
+		
+		// 4단계
+		psmt.executeUpdate();
+		
+		// 6단계
+		psmt.close();
+		conn.close();
+	}
 
 
 	// 댓글 리스트
